@@ -109,9 +109,9 @@ function Index() {
      <div className="film-meta"><span className="rating"><Star size={14} /><strong>{hero.rating}</strong><span className="text-muted-foreground">/ 10</span></span><span><CalendarDays size={13} />{hero.year}</span><span>{hero.director}</span></div>
      <p className="featured-description">{hero.description}</p><p className="film-quote">{hero.quote}</p>
     </div>
-    <Button variant="tool" size="icon" className="featured-arrow previous" aria-label="Poprzedni polecany film" onClick={() => setSlide((slide + featured.length - 1) % featured.length)}><ChevronLeft /></Button>
-    <Button variant="tool" size="icon" className="featured-arrow next" aria-label="Następny polecany film" onClick={() => setSlide((slide + 1) % featured.length)}><ChevronRight /></Button>
-    <div className="carousel-dots">{featured.map((movie, index) => <Button key={movie.id} variant="navigation" className={slide === index ? 'current' : ''} onClick={() => setSlide(index)} aria-label={`Polecany film: ${movie.title}`} aria-pressed={slide === index} />)}</div>
+    <Button variant="tool" size="icon" className="featured-arrow previous" aria-label="Poprzedni polecany film" onClick={event => { event.stopPropagation(); setSlide((slide + featured.length - 1) % featured.length); }}><ChevronLeft /></Button>
+    <Button variant="tool" size="icon" className="featured-arrow next" aria-label="Następny polecany film" onClick={event => { event.stopPropagation(); setSlide((slide + 1) % featured.length); }}><ChevronRight /></Button>
+    <div className="carousel-dots" onClick={event => event.stopPropagation()}>{featured.map((movie, index) => <Button key={movie.id} variant="navigation" className={slide === index ? 'current' : ''} onClick={() => setSlide(index)} aria-label={`Polecany film: ${movie.title}`} aria-pressed={slide === index} />)}</div>
     </section>}
     {view === 'all' && !search && <section className="weekly" aria-label="Filmy tygodnia">
      <div className="catalogue-heading"><div><h2>Filmy tygodnia</h2><p className="movie-count">Nowy wybór w każdy poniedziałek</p></div></div>
