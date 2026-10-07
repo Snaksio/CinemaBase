@@ -67,6 +67,6 @@ export const movieImages: Record<string, string> = {
   "avengers-ultron": "https://m.media-amazon.com/images/M/MV5BODAzNDMxMzAxOV5BMl5BanBnXkFtZTgwMDMxMjA4NDE@._V1_FMjpg_UX1000_.jpg",
   "avengers-infinity-war": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_FMjpg_UX1000_.jpg",
   "avengers-endgame": "https://image.tmdb.org/t/p/w780/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-  "spiderman-brand-new-day": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+   "spiderman-brand-new-day": "https://image.tmdb.org/t/p/w780/ghF1JYv7P5BgWHYfq9dqhqqNfz8.jpg",
 
 };
