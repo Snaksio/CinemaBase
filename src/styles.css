@@ -48,6 +48,8 @@
 .header-nav .nav-count { color: var(--primary); font-size: 10px; }
 .page-main { padding: 18px 40px 40px; max-width: 1800px; margin: auto; }
 .featured { position: relative; width: 100%; height: 440px; overflow: hidden; border-radius: 10px; isolation: isolate; }
+.featured.clickable { cursor: pointer; }
+.featured.clickable:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .featured-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; z-index: -3; }
 .featured::before { content: ''; position: absolute; inset: 0; background: var(--hero-shade); z-index: -2; }
 .featured::after { content: ''; position: absolute; inset: 0; background: var(--hero-bottom); z-index: -1; }
