@@ -18,6 +18,17 @@ import image16 from "@/assets/parasite.asset.json";
 import image17 from "@/assets/parasite-backdrop.asset.json";
 import image18 from "@/assets/inception-backdrop.asset.json";
 import image19 from "@/assets/interstellar-backdrop.asset.json";
+import image20 from "@/assets/top-gun.jpg";
+import image21 from "@/assets/top-gun-maverick.jpg";
+import image22 from "@/assets/dune.jpg";
+import image23 from "@/assets/oppenheimer.jpg";
+import image24 from "@/assets/titanic.jpg";
+import image25 from "@/assets/django-unchained.jpg";
+import image26 from "@/assets/whiplash.jpg";
+import image27 from "@/assets/la-la-land.jpg";
+import image28 from "@/assets/godfather.jpg";
+import image29 from "@/assets/jurassic-park.jpg";
+import image30 from "@/assets/back-to-the-future.jpg";
 export const movieImages: Record<string, string> = {
   "inception": image0.url,
   "dark-knight": image1.url,
