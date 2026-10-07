@@ -64,4 +64,7 @@ export const movieImages: Record<string, string> = {
   "godfather": image28,
   "jurassic-park": image29,
   "back-to-the-future": image30,
+  "avengers-ultron": image31,
+  "avengers-infinity-war": image32,
+  "avengers-endgame": image33,
 };
