@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791392403530,
+      "tag": "0000_create_film_lists",
+      "breakpoints": true
+    }
+  ]
 }
