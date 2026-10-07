@@ -53,7 +53,7 @@ export function weekNumber(date: Date): number {
 }
 export function weeklyMovies(date: Date, count = 4): Movie[] {
  const start = (weekNumber(date) * count) % movies.length;
- return Array.from({ length: count }, (_, i) => movies[(start + i) % movies.length]);
+ return Array.from({ length: count }, (_, i) => movies[(start + i) % movies.length]!);
 }
 export function filterMovies(query: string, genre: string, view: CatalogueView, lists: ListEntry[]) {
  const search = normalize(query.trim());
