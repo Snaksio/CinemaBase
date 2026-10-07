@@ -101,7 +101,7 @@ function Index() {
    </nav>
   </header>
   <main className="page-main">
-   {hero && view === 'all' && !search && <section className="featured" aria-label="Polecane filmy">
+  {hero && view === 'all' && !search && <section className="featured clickable" aria-label="Polecane filmy" onClick={() => setSelected(hero)} role="button" tabIndex={0} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelected(hero); } }}>
     <img className="featured-image" src={hero.backdrop} alt={`Kadr z filmu ${hero.title}`} />
     <div className="featured-copy">
      <div className="featured-tags"><span className="recommended">POLECANE</span>{hero.genres.map(tag => <span key={tag}>{tag}</span>)}</div>
