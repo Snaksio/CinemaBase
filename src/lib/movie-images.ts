@@ -23,6 +23,9 @@ import image21 from "@/assets/top-gun-maverick.jpg";
 import image22 from "@/assets/dune.jpg";
 import image23 from "@/assets/oppenheimer.jpg";
 import image24 from "@/assets/titanic.jpg";
+import image31 from "@/assets/avengers-ultron.jpg";
+import image32 from "@/assets/avengers-infinity-war.jpg";
+import image33 from "@/assets/avengers-endgame.jpg";
 import image25 from "@/assets/django-unchained.jpg";
 import image26 from "@/assets/whiplash.jpg";
 import image27 from "@/assets/la-la-land.jpg";
@@ -61,4 +64,7 @@ export const movieImages: Record<string, string> = {
   "godfather": image28,
   "jurassic-park": image29,
   "back-to-the-future": image30,
+  "avengers-ultron": image31,
+  "avengers-infinity-war": image32,
+  "avengers-endgame": image33,
 };

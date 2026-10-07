@@ -8,6 +8,9 @@ const entries: Omit<Movie, 'poster' | 'backdrop'>[] = [
  { id: 'joker', title: 'Joker', original: 'Joker', year: 2019, rating: 8.2, genres: ['Dramat', 'Kryminał', 'Thriller'], director: 'Todd Phillips', duration: '2 godz. 2 min', description: 'Arthur Fleck, samotny komik z Gotham, próbuje znaleźć swoje miejsce w świecie. Kolejne upokorzenia prowadzą go na niebezpieczną drogę.' },
  { id: 'matrix', title: 'Matrix', original: 'The Matrix', year: 1999, rating: 8.2, genres: ['Sci-Fi', 'Akcja'], director: 'Lana i Lilly Wachowski', duration: '2 godz. 16 min', description: 'Haker Neo odkrywa, że znany mu świat jest symulacją. Dołącza do buntowników, którzy walczą o wolność ludzkości.' },
  { id: 'avengers', title: 'Avengers', original: 'The Avengers', year: 2012, rating: 7.7, genres: ['Akcja', 'Sci-Fi', 'Przygodowy'], director: 'Joss Whedon', duration: '2 godz. 23 min', description: 'Najpotężniejsi bohaterowie Ziemi łączą siły, aby powstrzymać Lokiego i uratować świat przed inwazją.' },
+ { id: 'avengers-ultron', title: 'Avengers: Czas Ultrona', original: 'Avengers: Age of Ultron', year: 2015, rating: 7.3, genres: ['Akcja', 'Sci-Fi', 'Przygodowy'], director: 'Joss Whedon', duration: '2 godz. 21 min', description: 'Gdy program ochrony świata, Ultron, wymyka się spod kontroli, Avengers muszą połączyć siły, by powstrzymać sztuczną inteligencję przed zniszczeniem ludzkości.' },
+ { id: 'avengers-infinity-war', title: 'Avengers: Wojna bez granic', original: 'Avengers: Infinity War', year: 2018, rating: 8.4, genres: ['Akcja', 'Sci-Fi', 'Przygodowy'], director: 'Anthony i Joe Russo', duration: '2 godz. 29 min', description: 'Thanos przemierza galaktykę, zbierając Kamienie Nieskończoności. Avengers i ich sojusznicy stają do ostatecznego starcia o los wszechświata.', quote: '„Jestem nieuchronny.”' },
+ { id: 'avengers-endgame', title: 'Avengers: Koniec gry', original: 'Avengers: Endgame', year: 2019, rating: 8.4, genres: ['Akcja', 'Sci-Fi', 'Przygodowy'], director: 'Anthony i Joe Russo', duration: '3 godz. 1 min', description: 'Po zniszczeniu połowy życia we wszechświecie pozostali Avengers szukają sposobu, by cofnąć czyny Thanosa i przywrócić zaginionych.', quote: '„Avengers, do boju.”' },
  { id: 'avatar', title: 'Avatar', original: 'Avatar', year: 2009, rating: 7.6, genres: ['Akcja', 'Sci-Fi', 'Przygodowy', 'Fantasy'], director: 'James Cameron', duration: '2 godz. 42 min', description: 'Na odległej Pandorze Jake Sully poznaje kulturę Na’vi. Wkrótce musi wybrać między rozkazami a ochroną swojego nowego domu.' },
  { id: 'nemo', title: 'Gdzie jest Nemo', original: 'Finding Nemo', year: 2003, rating: 7.6, genres: ['Animacja', 'Familijny', 'Przygodowy'], director: 'Andrew Stanton', duration: '1 godz. 40 min', description: 'Gdy mały Nemo trafia do akwarium, jego tata Marlin wraz z zapominalską Dory przemierza ocean, by odnaleźć syna.' },
  { id: 'pulp-fiction', title: 'Pulp Fiction', original: 'Pulp Fiction', year: 1994, rating: 8.5, genres: ['Kryminał', 'Dramat'], director: 'Quentin Tarantino', duration: '2 godz. 34 min', description: 'Losy dwóch płatnych zabójców, boksera i żony gangstera splatają się w zaskakującej opowieści o podziemnym świecie Los Angeles.' },
@@ -50,7 +53,7 @@ export function weekNumber(date: Date): number {
 }
 export function weeklyMovies(date: Date, count = 4): Movie[] {
  const start = (weekNumber(date) * count) % movies.length;
- return Array.from({ length: count }, (_, i) => movies[(start + i) % movies.length]);
+ return Array.from({ length: count }, (_, i) => movies[(start + i) % movies.length]!);
 }
 export function filterMovies(query: string, genre: string, view: CatalogueView, lists: ListEntry[]) {
  const search = normalize(query.trim());
