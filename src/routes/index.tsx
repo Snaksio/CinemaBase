@@ -100,7 +100,7 @@ function Index() {
    </nav>
   </header>
   <main className="page-main">
-   {view === 'all' && !search && <section className="featured" aria-label="Polecane filmy">
+   {hero && view === 'all' && !search && <section className="featured" aria-label="Polecane filmy">
     <img className="featured-image" src={hero.backdrop} alt={`Kadr z filmu ${hero.title}`} />
     <div className="featured-copy">
      <div className="featured-tags"><span className="recommended">POLECANE</span>{hero.genres.map(tag => <span key={tag}>{tag}</span>)}</div>

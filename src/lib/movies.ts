@@ -20,7 +20,12 @@ const entries: Omit<Movie, 'poster' | 'backdrop'>[] = [
  { id: 'spirited-away', title: 'Spirited Away: W krainie bogów', original: 'Spirited Away', year: 2001, rating: 8.6, genres: ['Animacja', 'Fantasy', 'Familijny'], director: 'Hayao Miyazaki', duration: '2 godz. 5 min', description: 'Chihiro trafia do niezwykłej krainy duchów. Aby uratować rodziców, musi nauczyć się odwagi i odnaleźć własną siłę.' },
  { id: 'parasite', title: 'Parasite', original: '기생충', year: 2019, rating: 8.5, genres: ['Dramat', 'Thriller', 'Komedia'], director: 'Bong Joon-ho', duration: '2 godz. 12 min', description: 'Uboga rodzina Kimów stopniowo przenika do życia zamożnych Parków. Gdy ich starannie zaplanowany układ zaczyna pękać, pozornie niewinna historia zmienia się w pełen napięcia pojedynek klas społecznych.', quote: '„Wszystko trzyma się kłamstwa.”' },
 ];
-export const movies: Movie[] = entries.map(movie => ({ ...movie, poster: movieImages[movie.id], backdrop: movieImages[`${movie.id}-backdrop`] }));
+export const movies: Movie[] = entries.map(movie => {
+ const poster = movieImages[movie.id];
+ if (!poster) throw new Error(`Missing poster: ${movie.id}`);
+ const backdrop = movieImages[`${movie.id}-backdrop`];
+ return { ...movie, poster, ...(backdrop ? { backdrop } : {}) };
+});
 export const genres = ['Wszystkie', 'Akcja', 'Sci-Fi', 'Dramat', 'Kryminał', 'Thriller', 'Przygodowy', 'Animacja', 'Familijny', 'Fantasy', 'Biograficzny', 'Historyczny', 'Komedia'];
 export type ListEntry = { movie_id: string; list_type: string };
 export type CatalogueView = 'all' | 'watchlist' | 'favorite';
