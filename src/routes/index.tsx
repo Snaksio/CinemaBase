@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
-import { filterMovies, genres, movies, type CatalogueView, type Movie } from '@/lib/movies';
+import { filterMovies, genres, movies, weeklyMovies, type CatalogueView, type Movie } from '@/lib/movies';
 import { movieImages } from '@/lib/movie-images';
 
 export const Route = createFileRoute('/')({
  head: () => ({ meta: [
   { title: 'CinemaBase — Odkryj swój następny film' },
-  { name: 'description', content: 'Odkrywaj 17 wyjątkowych filmów. Wyszukuj tytuły, filtruj gatunki i zapisuj ulubione filmy oraz listę do obejrzenia.' },
+  { name: 'description', content: 'Odkrywaj 28 wyjątkowych filmów. Wyszukuj tytuły, filtruj gatunki i zapisuj ulubione filmy oraz listę do obejrzenia.' },
   { property: 'og:title', content: 'CinemaBase — Odkryj swój następny film' },
   { property: 'og:description', content: 'Twoje ulubione historie w jednym miejscu. Odkrywaj filmy i twórz własne listy.' },
   { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
@@ -39,7 +39,8 @@ function Index() {
  const [notice, setNotice] = useState('');
  const searchRef = useRef<HTMLInputElement>(null);
  const queryClient = useQueryClient();
- const featured = ['parasite', 'inception', 'interstellar'].map(id => movies.find(movie => movie.id === id)).filter((movie): movie is Movie => Boolean(movie));
+  const featured = ['parasite', 'inception', 'interstellar'].map(id => movies.find(movie => movie.id === id)).filter((movie): movie is Movie => Boolean(movie));
+  const weekly = weeklyMovies(new Date());
  const hero = featured[slide] ?? movies[0];
  const { data: lists = [], error: listError } = useQuery({
   queryKey: ['film-lists', user?.id], enabled: Boolean(user),
@@ -111,8 +112,15 @@ function Index() {
     <Button variant="tool" size="icon" className="featured-arrow previous" aria-label="Poprzedni polecany film" onClick={() => setSlide((slide + featured.length - 1) % featured.length)}><ChevronLeft /></Button>
     <Button variant="tool" size="icon" className="featured-arrow next" aria-label="Następny polecany film" onClick={() => setSlide((slide + 1) % featured.length)}><ChevronRight /></Button>
     <div className="carousel-dots">{featured.map((movie, index) => <Button key={movie.id} variant="navigation" className={slide === index ? 'current' : ''} onClick={() => setSlide(index)} aria-label={`Polecany film: ${movie.title}`} aria-pressed={slide === index} />)}</div>
-   </section>}
-   <section className="catalogue" aria-label="Katalog filmów">
+    </section>}
+    {view === 'all' && !search && <section className="weekly" aria-label="Filmy tygodnia">
+     <div className="catalogue-heading"><div><h2>Filmy tygodnia</h2><p className="movie-count">Nowy wybór w każdy poniedziałek</p></div></div>
+     <div className="weekly-grid">{weekly.map(movie => <button type="button" className="weekly-card" key={movie.id} onClick={() => setSelected(movie)} aria-label={`Szczegóły: ${movie.title}`}>
+      <img src={movie.poster} alt={`Plakat filmu ${movie.title}`} loading="lazy" />
+      <div className="weekly-info"><span className="rating"><Star size={12} />{movie.rating}</span><h3>{movie.title}</h3><p>{movie.year} · {movie.genres[0]}</p></div>
+     </button>)}</div>
+    </section>}
+    <section className="catalogue" aria-label="Katalog filmów">
     <div className="catalogue-heading"><div><h2>{search ? 'Wyniki wyszukiwania' : view === 'favorite' ? 'Twoje ulubione filmy' : view === 'watchlist' ? 'Chcę obejrzeć' : 'Odkryj swój następny film'}</h2><p className="movie-count">{filtered.length} {filtered.length === 1 ? 'film' : filtered.length > 1 && filtered.length < 5 ? 'filmy' : 'filmów'}</p></div></div>
     <div className="genre-list" aria-label="Gatunki filmowe">{genres.map(tag => <Button key={tag} variant={genre === tag ? 'selected' : 'cinema'} onClick={() => setGenre(tag)} aria-pressed={genre === tag}>{tag}</Button>)}</div>
     {listError && <p className="auth-message">Nie udało się wczytać Twoich list. <Button variant="link" onClick={() => queryClient.invalidateQueries({ queryKey: ['film-lists'] })}>Spróbuj ponownie</Button></p>}

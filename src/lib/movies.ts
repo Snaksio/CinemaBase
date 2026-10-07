@@ -41,6 +41,17 @@ export const genres = ['Wszystkie', 'Akcja', 'Sci-Fi', 'Dramat', 'Kryminał', 'T
 export type ListEntry = { movie_id: string; list_type: string };
 export type CatalogueView = 'all' | 'watchlist' | 'favorite';
 const normalize = (value: string) => value.toLocaleLowerCase('pl').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
+export function weekNumber(date: Date): number {
+ const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+ const day = d.getUTCDay() || 7;
+ d.setUTCDate(d.getUTCDate() + 4 - day);
+ const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+ return d.getUTCFullYear() * 100 + Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+}
+export function weeklyMovies(date: Date, count = 4): Movie[] {
+ const start = (weekNumber(date) * count) % movies.length;
+ return Array.from({ length: count }, (_, i) => movies[(start + i) % movies.length]);
+}
 export function filterMovies(query: string, genre: string, view: CatalogueView, lists: ListEntry[]) {
  const search = normalize(query.trim());
  return movies.filter(movie => (genre === 'Wszystkie' || movie.genres.includes(genre)) && (!search || normalize([movie.title, movie.original, movie.director, ...movie.genres].join(' ')).includes(search)) && (view === 'all' || lists.some(entry => entry.movie_id === movie.id && entry.list_type === view)));
