@@ -80,4 +80,9 @@ export const movieImages: Record<string, string> = {
   "avengers-infinity-war": "https://image.tmdb.org/t/p/w780/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
   "avengers-endgame": "https://image.tmdb.org/t/p/w780/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
   "spiderman-brand-new-day": "https://image.tmdb.org/t/p/w780/ghF1JYv7P5BgWHYfq9dqhqqNfz8.jpg",
+  "shrek": "https://image.tmdb.org/t/p/w780/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg",
+  "harry-potter": "https://image.tmdb.org/t/p/w780/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg",
+  "dune-part-two": "https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+  "spider-man-no-way-home": "https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+  "the-batman": "https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg",
 };
