@@ -40,6 +40,7 @@ const entries: Omit<Movie, 'poster' | 'backdrop'>[] = [
   { id: 'spider-man-no-way-home', title: 'Spider-Man: Bez drogi do domu', original: 'Spider-Man: No Way Home', year: 2021, rating: 8.2, genres: ['Akcja', 'Sci-Fi', 'Przygodowy'], director: 'Jon Watts', duration: '2 godz. 28 min', description: 'Po ujawnieniu tożsamości Peter Parker prosi Doktora Strange’a o pomoc, co przypadkowo otwiera multiwersum.' },
   { id: 'the-batman', title: 'Batman', original: 'The Batman', year: 2022, rating: 7.8, genres: ['Akcja', 'Kryminał', 'Dramat'], director: 'Matt Reeves', duration: '2 godz. 56 min', description: 'Gdy seryjny morderca bierze na cel elitę Gotham, Batman musi zanurzyć się w świat korupcji.', quote: '„Jestem zemstą.”' },
   { id: 'days-of-thunder', title: 'Szybki jak błyskawica', original: 'Days of Thunder', year: 1990, rating: 6.8, genres: ['Akcja', 'Dramat'], director: 'Tony Scott', duration: '1 godz. 47 min', description: 'Młody i utalentowany kierowca Cole Trickle wkracza do bezwzględnego świata wyścigów NASCAR, rywalizując o zwycięstwo w Daytona 500.', quote: '„Nie uciekniesz przed grzmotem.”' },
+  ];
 export const movies: Movie[] = entries.map(movie => {
  const poster = movieImages[movie.id];
  if (!poster) throw new Error(`Missing poster: ${movie.id}`);
