@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { User } from '@supabase/supabase-js';
-import { Bookmark, CalendarDays, Check, ChevronLeft, ChevronRight, Clapperboard, Clock, Heart, LogOut, Plus, Search, Star, X } from 'lucide-react';
+import { Bookmark, CalendarDays, Check, ChevronLeft, ChevronRight, Clapperboard, Clock, Heart, LogOut, Plus, Search, Star, StarHalf, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,7 +13,7 @@ import { movieImages } from '@/lib/movie-images';
 export const Route = createFileRoute('/')({
  head: () => ({ meta: [
   { title: 'CinemaBase — Odkryj swój następny film' },
-  { name: 'description', content: 'Odkrywaj 31 wyjątkowych filmów. Wyszukuj tytuły, filtruj gatunki i zapisuj ulubione filmy oraz listę do obejrzenia.' },
+  { name: 'description', content: 'Odkrywaj 32 wyjątkowe filmy. Wyszukuj tytuły, oceniaj filmy i zapisuj ulubione filmy oraz listę do obejrzenia.' },
   { property: 'og:title', content: 'CinemaBase — Odkryj swój następny film' },
   { property: 'og:description', content: 'Twoje ulubione historie w jednym miejscu. Odkrywaj filmy i twórz własne listy.' },
   { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
@@ -51,7 +51,27 @@ function Index() {
    return data;
   },
  });
- const filtered = filterMovies(search, genre, view, lists);
+ const { data: ratings = [] } = useQuery({
+  queryKey: ['film-ratings', user?.id], enabled: Boolean(user),
+  queryFn: async () => {
+   if (!user) return [];
+   const { data, error } = await supabase.from('film_ratings').select('movie_id,score').eq('user_id', user.id).order('updated_at', { ascending: false });
+   if (error) throw error;
+   return data;
+  },
+ });
+ const myScore = (id: string) => ratings.find(r => r.movie_id === id)?.score;
+ const filtered = filterMovies(search, genre, view, [...lists, ...ratings.map(r => ({ movie_id: r.movie_id, list_type: 'rated' }))]);
+ async function rate(id: string, score: number) {
+  if (!user) { setAuthMessage('Zaloguj się, aby oceniać filmy.'); setAuthOpen(true); return; }
+  try {
+   const remove = myScore(id) === score;
+   const result = remove ? await supabase.from('film_ratings').delete().eq('user_id', user.id).eq('movie_id', id) : await supabase.from('film_ratings').upsert({ user_id: user.id, movie_id: id, score, updated_at: new Date().toISOString() });
+   if (result.error) throw result.error;
+   await queryClient.invalidateQueries({ queryKey: ['film-ratings', user.id] });
+   setNotice(remove ? 'Ocena usunięta.' : `Oceniono na ${score}/10.`);
+  } catch { setNotice('Nie udało się zapisać oceny. Spróbuj ponownie.'); }
+ }
  const isSaved = (id: string, type: string) => lists.some(entry => entry.movie_id === id && entry.list_type === type);
  useEffect(() => {
   supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
@@ -97,7 +117,8 @@ function Index() {
     <Button variant="navigation" className={`all-nav ${view === 'all' ? 'active' : ''}`} onClick={() => changeView('all')}>Wszystkie</Button>
     <Button variant="navigation" className={view === 'watchlist' ? 'active' : ''} onClick={() => changeView('watchlist')} aria-label="Chcę obejrzeć"><Bookmark /><span className="nav-label">Chcę obejrzeć</span>{lists.filter(e => e.list_type === 'watchlist').length > 0 && <span className="nav-count">{lists.filter(e => e.list_type === 'watchlist').length}</span>}</Button>
     <Button variant="navigation" className={view === 'favorite' ? 'active' : ''} onClick={() => changeView('favorite')} aria-label="Ulubione"><Heart /><span className="nav-label">Ulubione</span>{lists.filter(e => e.list_type === 'favorite').length > 0 && <span className="nav-count">{lists.filter(e => e.list_type === 'favorite').length}</span>}</Button>
-    {user && <Button variant="navigation" size="icon" title="Wyloguj się" aria-label="Wyloguj się" onClick={async () => { await supabase.auth.signOut(); queryClient.removeQueries({ queryKey: ['film-lists'] }); }}><LogOut /></Button>}
+    <Button variant="navigation" className={view === 'rated' ? 'active' : ''} onClick={() => changeView('rated')} aria-label="Ocenione"><StarHalf /><span className="nav-label">Ocenione</span>{ratings.length > 0 && <span className="nav-count">{ratings.length}</span>}</Button>
+    {user && <Button variant="navigation" size="icon" title="Wyloguj się" aria-label="Wyloguj się" onClick={async () => { await supabase.auth.signOut(); queryClient.removeQueries({ queryKey: ['film-lists'] }); queryClient.removeQueries({ queryKey: ['film-ratings'] }); }}><LogOut /></Button>}
    </nav>
   </header>
   <main className="page-main">
@@ -121,20 +142,20 @@ function Index() {
      </button>)}</div>
     </section>}
     <section className="catalogue" aria-label="Katalog filmów">
-    <div className="catalogue-heading"><div><h2>{search ? 'Wyniki wyszukiwania' : view === 'favorite' ? 'Twoje ulubione filmy' : view === 'watchlist' ? 'Chcę obejrzeć' : 'Odkryj swój następny film'}</h2><p className="movie-count">{filtered.length} {filtered.length === 1 ? 'film' : filtered.length > 1 && filtered.length < 5 ? 'filmy' : 'filmów'}</p></div></div>
+    <div className="catalogue-heading"><div><h2>{search ? 'Wyniki wyszukiwania' : view === 'favorite' ? 'Twoje ulubione filmy' : view === 'watchlist' ? 'Chcę obejrzeć' : view === 'rated' ? 'Ocenione filmy' : 'Odkryj swój następny film'}</h2><p className="movie-count">{filtered.length} {filtered.length === 1 ? 'film' : filtered.length > 1 && filtered.length < 5 ? 'filmy' : 'filmów'}</p></div></div>
     <div className="genre-list" aria-label="Gatunki filmowe">{genres.map(tag => <Button key={tag} variant={genre === tag ? 'selected' : 'cinema'} onClick={() => setGenre(tag)} aria-pressed={genre === tag}>{tag}</Button>)}</div>
     {listError && <p className="auth-message">Nie udało się wczytać Twoich list. <Button variant="link" onClick={() => queryClient.invalidateQueries({ queryKey: ['film-lists'] })}>Spróbuj ponownie</Button></p>}
     <div className="movie-grid">{filtered.map(movie => <article className="movie-card" key={movie.id}>
      <Button variant="navigation" className="poster-button" aria-label={`Szczegóły: ${movie.title}`} onClick={() => setSelected(movie)}><img src={movie.poster} alt={`Plakat filmu ${movie.title}`} loading="lazy" /></Button>
-     <span className="poster-rating"><Star />{movie.rating}</span>
+     <span className="poster-rating"><Star />{movie.rating}</span>{myScore(movie.id) && <span className="my-score" title="Twoja ocena">Ty: {myScore(movie.id)}</span>}
      <div className="poster-actions"><Button variant="tool" size="icon" className={isSaved(movie.id, 'favorite') ? 'saved' : ''} title={isSaved(movie.id, 'favorite') ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'} aria-label={`${isSaved(movie.id, 'favorite') ? 'Usuń z' : 'Dodaj do'} ulubionych: ${movie.title}`} aria-pressed={isSaved(movie.id, 'favorite')} disabled={pending.includes(`${movie.id}-favorite`)} onClick={() => toggle(movie.id, 'favorite')}><Heart className="heart" /></Button><Button variant="tool" size="icon" className={isSaved(movie.id, 'watchlist') ? 'saved' : ''} title={isSaved(movie.id, 'watchlist') ? 'Usuń z listy do obejrzenia' : 'Chcę obejrzeć'} aria-label={`Chcę obejrzeć: ${movie.title}`} aria-pressed={isSaved(movie.id, 'watchlist')} disabled={pending.includes(`${movie.id}-watchlist`)} onClick={() => toggle(movie.id, 'watchlist')}>{isSaved(movie.id, 'watchlist') ? <Check /> : <Plus />}</Button></div>
      <div className="poster-info"><h3>{movie.title}</h3><p><CalendarDays />{movie.year}<span>· {movie.genres.join(', ')}</span></p></div>
     </article>)}</div>
-    {!filtered.length && <div className="empty-state">{view === 'favorite' ? <Heart size={32} /> : view === 'watchlist' ? <Bookmark size={32} /> : <Search size={32} />}<h3>{search || genre !== 'Wszystkie' ? 'Nie znaleziono filmów' : 'Twoja lista jest jeszcze pusta'}</h3><p>{search || genre !== 'Wszystkie' ? 'Spróbuj innego tytułu lub gatunku.' : 'Jeszcze tyle dobrych historii przed Tobą.'}</p>{!user && view !== 'all' ? <Button onClick={() => { setAuthMessage(''); setAuthOpen(true); }}>Zaloguj się</Button> : <Button variant="selected" onClick={() => changeView('all')}>Wróć do wszystkich filmów</Button>}</div>}
+    {!filtered.length && <div className="empty-state">{view === 'favorite' ? <Heart size={32} /> : view === 'watchlist' ? <Bookmark size={32} /> : view === 'rated' ? <StarHalf size={32} /> : <Search size={32} />}<h3>{search || genre !== 'Wszystkie' ? 'Nie znaleziono filmów' : 'Twoja lista jest jeszcze pusta'}</h3><p>{search || genre !== 'Wszystkie' ? 'Spróbuj innego tytułu lub gatunku.' : 'Jeszcze tyle dobrych historii przed Tobą.'}</p>{!user && view !== 'all' ? <Button onClick={() => { setAuthMessage(''); setAuthOpen(true); }}>Zaloguj się</Button> : <Button variant="selected" onClick={() => changeView('all')}>Wróć do wszystkich filmów</Button>}</div>}
    </section>
    <footer className="site-footer"><span>CinemaBase · Dobre historie zostają z Tobą.</span><span>{movies.length} filmów. Nieskończenie wiele emocji.</span></footer>
   </main>
-  <Dialog open={Boolean(selected)} onOpenChange={open => { if (!open) setSelected(null); }}><DialogContent className="detail-dialog">{selected && <div className="detail-layout"><img className="detail-poster" src={selected.poster} alt={`Plakat: ${selected.title}`} /><div><DialogTitle className="detail-title">{selected.title}</DialogTitle><p className="detail-original">{selected.original}</p><div className="film-meta"><span className="rating"><Star size={14} />{selected.rating} / 10</span><span><CalendarDays size={13} />{selected.year}</span><span><Clock size={13} />{selected.duration}</span></div><div className="featured-tags mt-4">{selected.genres.map(tag => <span key={tag}>{tag}</span>)}</div><DialogDescription className="detail-description">{selected.description}</DialogDescription><p className="detail-director"><span>Reżyseria: </span>{selected.director}</p><div className="detail-actions"><Button variant={isSaved(selected.id, 'watchlist') ? 'selected' : 'default'} disabled={pending.includes(`${selected.id}-watchlist`)} onClick={() => toggle(selected.id, 'watchlist')}>{isSaved(selected.id, 'watchlist') ? <Check /> : <Bookmark />}{isSaved(selected.id, 'watchlist') ? 'Na liście do obejrzenia' : 'Chcę obejrzeć'}</Button><Button variant={isSaved(selected.id, 'favorite') ? 'selected' : 'cinema'} disabled={pending.includes(`${selected.id}-favorite`)} onClick={() => toggle(selected.id, 'favorite')}><Heart />{isSaved(selected.id, 'favorite') ? 'W ulubionych' : 'Dodaj do ulubionych'}</Button></div></div></div>}</DialogContent></Dialog>
+  <Dialog open={Boolean(selected)} onOpenChange={open => { if (!open) setSelected(null); }}><DialogContent className="detail-dialog">{selected && <div className="detail-layout"><img className="detail-poster" src={selected.poster} alt={`Plakat: ${selected.title}`} /><div><DialogTitle className="detail-title">{selected.title}</DialogTitle><p className="detail-original">{selected.original}</p><div className="film-meta"><span className="rating"><Star size={14} />{selected.rating} / 10</span><span><CalendarDays size={13} />{selected.year}</span><span><Clock size={13} />{selected.duration}</span></div><div className="featured-tags mt-4">{selected.genres.map(tag => <span key={tag}>{tag}</span>)}</div><DialogDescription className="detail-description">{selected.description}</DialogDescription><div className="rate-box"><span>{myScore(selected.id) ? `Twoja ocena: ${myScore(selected.id)}/10` : 'Oceń film:'}</span><div className="rate-stars" role="radiogroup" aria-label="Twoja ocena">{Array.from({ length: 10 }, (_, i) => i + 1).map(n => <button key={n} type="button" role="radio" aria-checked={myScore(selected.id) === n} aria-label={`Oceń na ${n}`} className={(myScore(selected.id) ?? 0) >= n ? 'on' : ''} onClick={() => rate(selected.id, n)}><Star size={20} /></button>)}</div></div><p className="detail-director"><span>Reżyseria: </span>{selected.director}</p><div className="detail-actions"><Button variant={isSaved(selected.id, 'watchlist') ? 'selected' : 'default'} disabled={pending.includes(`${selected.id}-watchlist`)} onClick={() => toggle(selected.id, 'watchlist')}>{isSaved(selected.id, 'watchlist') ? <Check /> : <Bookmark />}{isSaved(selected.id, 'watchlist') ? 'Na liście do obejrzenia' : 'Chcę obejrzeć'}</Button><Button variant={isSaved(selected.id, 'favorite') ? 'selected' : 'cinema'} disabled={pending.includes(`${selected.id}-favorite`)} onClick={() => toggle(selected.id, 'favorite')}><Heart />{isSaved(selected.id, 'favorite') ? 'W ulubionych' : 'Dodaj do ulubionych'}</Button></div></div></div>}</DialogContent></Dialog>
   <Dialog open={authOpen} onOpenChange={setAuthOpen}><DialogContent className="auth-dialog"><DialogTitle>{signup ? 'Dołącz do CinemaBase' : 'Witaj w CinemaBase'}</DialogTitle><DialogDescription>Twoje filmy, Twoje listy, Twoje historie.</DialogDescription><Button variant="outline" disabled={authBusy} onClick={googleLogin}>Kontynuuj z Google</Button><div className="auth-separator">lub przez e-mail</div><form className="auth-form" onSubmit={submitAuth}><label>E-mail<input type="email" autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="twoj@email.pl" required /></label><label>Hasło<input type="password" autoComplete={signup ? 'new-password' : 'current-password'} value={password} onChange={event => setPassword(event.target.value)} minLength={6} required /></label>{authMessage && <p role="status" className="auth-message">{authMessage}</p>}<Button type="submit" disabled={authBusy}>{authBusy ? 'Chwileczkę…' : signup ? 'Utwórz konto' : 'Zaloguj się'}</Button></form><Button variant="link" className="auth-switch" onClick={() => { setSignup(!signup); setAuthMessage(''); }}>{signup ? 'Masz już konto? Zaloguj się' : 'Nie masz konta? Zarejestruj się'}</Button></DialogContent></Dialog>
   {notice && <div className="notice" role="status">{notice}</div>}
  </>;
