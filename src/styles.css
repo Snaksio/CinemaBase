@@ -129,3 +129,7 @@
 .rate-stars button:hover { transform: scale(1.15); color: var(--primary); }
 .rate-stars button.on { color: var(--primary); }
 .rate-stars button.on svg { fill: currentColor; }
+
+.trailer-box { margin-top: 1rem; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; border-radius: 0.75rem; border: 1px solid var(--border); background: var(--muted); }
+.trailer-box iframe { width: 100%; height: 100%; border: 0; }
+.trailer-link { display: inline-flex; margin-top: 1rem; padding: 0.6rem 1rem; border-radius: 0.6rem; background: var(--primary); color: var(--primary-foreground); font-weight: 700; }
