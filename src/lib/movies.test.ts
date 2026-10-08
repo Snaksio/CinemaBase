@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { filterMovies, movies, weeklyMovies } from './movies';
 describe('Movie catalogue', () => {
- it('contains 32 films', () => expect(movies).toHaveLength(32));
+ it('contains 37 films', () => expect(movies).toHaveLength(37));
  it('includes all four Avengers films', () => expect(filterMovies('avengers', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['avengers', 'avengers-ultron', 'avengers-infinity-war', 'avengers-endgame']));
  it('includes both Top Gun films', () => expect(filterMovies('top gun', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['top-gun', 'top-gun-maverick']));
  it('searches Polish and original titles without case sensitivity', () => expect(filterMovies('INCEPTION', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['inception']));
@@ -23,4 +23,5 @@ describe('Movie catalogue', () => {
  it('keeps the same selection within one week', () => {
   expect(weeklyMovies(new Date('2026-10-05')).map(m => m.id)).toEqual(weeklyMovies(new Date('2026-10-11')).map(m => m.id));
  });
-});
+});import { trailerId } from './movies';
+it('has a trailer for Inception', () => expect(trailerId('inception')).toBe('YoHD9XEInc0'));
