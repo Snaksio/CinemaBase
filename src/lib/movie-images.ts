@@ -73,4 +73,5 @@ export const movieImages: Record<string, string> = {
   "dune-part-two": "https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
   "spider-man-no-way-home": "https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
   "the-batman": "https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+  "days-of-thunder": "https://image.tmdb.org/t/p/w780/8UvcoeMJag8UWGF8sg7eYspzq0Q.jpg",
 };
