@@ -54,6 +54,7 @@ export const movieImages: Record<string, string> = {
   "inception-backdrop": image18.url,
   "interstellar-backdrop": image19.url,
     "top-gun": "https://image.tmdb.org/t/p/w780/fmXOY1bdRJ9CmzroeaTXRyr6qyz.jpg",
+  "top-gun": "https://image.tmdb.org/t/p/w780/fmXOY1bdRJ9CmzroeaTXRyr6qyz.jpg",
   "top-gun-maverick": "https://image.tmdb.org/t/p/w780/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
   "dune": "https://image.tmdb.org/t/p/w780/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
   "oppenheimer": "https://image.tmdb.org/t/p/w780/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
@@ -69,4 +70,14 @@ export const movieImages: Record<string, string> = {
   "avengers-endgame": "https://image.tmdb.org/t/p/w780/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
    "spiderman-brand-new-day": "https://image.tmdb.org/t/p/w780/ghF1JYv7P5BgWHYfq9dqhqqNfz8.jpg",
 
+  "django-unchained": "https://image.tmdb.org/t/p/w780/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg",
+  "whiplash": "https://image.tmdb.org/t/p/w780/7fn624j5lj3xTme2SgiLCeuedmO.jpg",
+  "la-la-land": "https://image.tmdb.org/t/p/w780/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg",
+  "godfather": "https://image.tmdb.org/t/p/w780/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+  "jurassic-park": "https://image.tmdb.org/t/p/w780/maFjKnJ62hDQ9E66dKqDZgbUy0H.jpg",
+  "back-to-the-future": "https://image.tmdb.org/t/p/w780/fNOH9f1aA7XRTzl1sAOx9iF553Q.jpg",
+  "avengers-ultron": "https://image.tmdb.org/t/p/w780/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg",
+  "avengers-infinity-war": "https://image.tmdb.org/t/p/w780/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+  "avengers-endgame": "https://image.tmdb.org/t/p/w780/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+  "spiderman-brand-new-day": "https://image.tmdb.org/t/p/w780/ghF1JYv7P5BgWHYfq9dqhqqNfz8.jpg",
 };
