@@ -43,7 +43,7 @@ export const movies: Movie[] = entries.map(movie => {
 });
 export const genres = ['Wszystkie', 'Akcja', 'Sci-Fi', 'Dramat', 'Kryminał', 'Thriller', 'Przygodowy', 'Animacja', 'Familijny', 'Fantasy', 'Biograficzny', 'Historyczny', 'Komedia'];
 export type ListEntry = { movie_id: string; list_type: string };
-export type CatalogueView = 'all' | 'watchlist' | 'favorite';
+export type CatalogueView = 'all' | 'watchlist' | 'favorite' | 'rated';
 const normalize = (value: string) => value.toLocaleLowerCase('pl').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
 export function weekNumber(date: Date): number {
  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
