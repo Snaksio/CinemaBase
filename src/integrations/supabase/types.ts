@@ -35,6 +35,27 @@ export type Database = {
         }
         Relationships: []
       }
+      film_ratings: {
+        Row: {
+          movie_id: string
+          score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          movie_id: string
+          score: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          movie_id?: string
+          score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

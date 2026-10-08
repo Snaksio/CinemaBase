@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { filterMovies, movies, weeklyMovies } from './movies';
 describe('Movie catalogue', () => {
- it('contains 31 films', () => expect(movies).toHaveLength(31));
+ it('contains 32 films', () => expect(movies).toHaveLength(32));
  it('includes all four Avengers films', () => expect(filterMovies('avengers', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['avengers', 'avengers-ultron', 'avengers-infinity-war', 'avengers-endgame']));
  it('includes both Top Gun films', () => expect(filterMovies('top gun', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['top-gun', 'top-gun-maverick']));
  it('searches Polish and original titles without case sensitivity', () => expect(filterMovies('INCEPTION', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['inception']));
  it('searches directors', () => expect(filterMovies('Bong Joon-ho', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['parasite']));
  it('filters genres', () => expect(filterMovies('', 'Historyczny', 'all', []).map(m => m.id)).toEqual(['gladiator', 'oppenheimer', 'titanic']));
+ it('shows only rated films in rated view', () => expect(filterMovies('', 'Wszystkie', 'rated', [{ movie_id: 'joker', list_type: 'rated' }, { movie_id: 'matrix', list_type: 'favorite' }]).map(m => m.id)).toEqual(['joker']));
  it('keeps favorites separate from watchlist', () => expect(filterMovies('', 'Wszystkie', 'favorite', [{ movie_id: 'matrix', list_type: 'favorite' }, { movie_id: 'joker', list_type: 'watchlist' }]).map(m => m.id)).toEqual(['matrix']));
  it('combines saved lists with search and genre', () => expect(filterMovies('Joker', 'Sci-Fi', 'watchlist', [{ movie_id: 'joker', list_type: 'watchlist' }])).toEqual([]));
  it('picks 4 distinct movies of the week', () => {
