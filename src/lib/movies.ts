@@ -1,6 +1,7 @@
 import { movieImages } from './movie-images';
+import { seriesEntries, type Season } from './series';
 
-export type Movie = { id: string; title: string; original: string; year: number; rating: number; genres: string[]; director: string; duration: string; description: string; quote?: string; poster: string; backdrop?: string };
+export type Movie = { id: string; title: string; original: string; year: number; rating: number; genres: string[]; director: string; duration: string; description: string; quote?: string; poster: string; backdrop?: string; kind?: 'series'; years?: string; seasons?: Season[] };
 const entries: Omit<Movie, 'poster' | 'backdrop'>[] = [
  { id: 'inception', title: 'Incepcja', original: 'Inception', year: 2010, rating: 8.4, genres: ['Sci-Fi', 'Akcja', 'Thriller'], director: 'Christopher Nolan', duration: '2 godz. 28 min', description: 'Dom Cobb potrafi kraść tajemnice z ludzkiej podświadomości. Tym razem musi dokonać czegoś niemożliwego: zaszczepić w umyśle nową ideę.', quote: '„Twój umysł jest miejscem zbrodni.”' },
  { id: 'dark-knight', title: 'Mroczny Rycerz', original: 'The Dark Knight', year: 2008, rating: 8.5, genres: ['Akcja', 'Kryminał', 'Dramat'], director: 'Christopher Nolan', duration: '2 godz. 32 min', description: 'Batman, porucznik Gordon i Harvey Dent próbują oczyścić Gotham z przestępczości. Ich plany burzy nieprzewidywalny Joker.' },
@@ -66,7 +67,14 @@ export function weeklyMovies(date: Date, count = 4): Movie[] {
  const start = (weekNumber(date) * count) % movies.length;
  return Array.from({ length: count }, (_, i) => movies[(start + i) % movies.length]!);
 }
-export function filterMovies(query: string, genre: string, view: CatalogueView, lists: ListEntry[]) {
+export const series: Movie[] = seriesEntries.map(({ trailer, years, seasons, ...s }) => {
+ trailers[s.id] = trailer;
+ const total = seasons.reduce((n, x) => n + x.episodes, 0);
+ return { ...s, kind: 'series' as const, years, seasons, duration: `${seasons.length} ${seasons.length === 1 ? 'sezon' : seasons.length < 5 ? 'sezony' : 'sezonów'} · ${total} odc.` };
+});
+export type CatalogueKind = 'movie' | 'series' | 'any';
+export function filterMovies(query: string, genre: string, view: CatalogueView, lists: ListEntry[], kind: CatalogueKind = 'movie') {
  const search = normalize(query.trim());
- return movies.filter(movie => (genre === 'Wszystkie' || movie.genres.includes(genre)) && (!search || normalize([movie.title, movie.original, movie.director, ...movie.genres].join(' ')).includes(search)) && (view === 'all' || lists.some(entry => entry.movie_id === movie.id && entry.list_type === view)));
+ const pool = kind === 'movie' ? movies : kind === 'series' ? series : [...movies, ...series];
+ return pool.filter(movie => (genre === 'Wszystkie' || movie.genres.includes(genre)) && (!search || normalize([movie.title, movie.original, movie.director, ...movie.genres].join(' ')).includes(search)) && (view === 'all' || lists.some(entry => entry.movie_id === movie.id && entry.list_type === view)));
 }

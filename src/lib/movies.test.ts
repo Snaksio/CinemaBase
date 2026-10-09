@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { filterMovies, movies, weeklyMovies } from './movies';
 describe('Movie catalogue', () => {
- it('contains 37 films', () => expect(movies).toHaveLength(37));
+ it('contains 40 films', () => expect(movies).toHaveLength(40));
  it('includes all four Avengers films', () => expect(filterMovies('avengers', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['avengers', 'avengers-ultron', 'avengers-infinity-war', 'avengers-endgame']));
  it('includes both Top Gun films', () => expect(filterMovies('top gun', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['top-gun', 'top-gun-maverick']));
  it('searches Polish and original titles without case sensitivity', () => expect(filterMovies('INCEPTION', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['inception']));
@@ -25,3 +25,5 @@ describe('Movie catalogue', () => {
  });
 });import { trailerId } from './movies';
 it('has a trailer for Inception', () => expect(trailerId('inception')).toBe('YoHD9XEInc0'));
+it('shows series only in the series catalogue', () => expect(filterMovies('', 'Wszystkie', 'all', [], 'series').map(m => m.id)).toEqual(['breaking-bad', 'stranger-things', 'game-of-thrones', 'the-last-of-us', 'the-witcher']));
+it('keeps saved series in lists', () => expect(filterMovies('', 'Wszystkie', 'favorite', [{ movie_id: 'breaking-bad', list_type: 'favorite' }], 'any').map(m => m.id)).toEqual(['breaking-bad']));
