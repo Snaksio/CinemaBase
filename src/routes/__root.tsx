@@ -78,9 +78,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Zenvio — Twój świat filmów" },
+      { title: "CinemaBase — Twój świat filmów" },
       { name: "description", content: "Odkrywaj filmy i twórz własne filmowe listy." },
-      { property: "og:title", content: "Zenvio — Twój świat filmów" },
+      { property: "og:title", content: "CinemaBase — Twój świat filmów" },
       { property: "og:description", content: "Odkrywaj filmy i twórz własne filmowe listy." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
