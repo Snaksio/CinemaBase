@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { filterMovies, movies, weeklyMovies } from './movies';
 describe('Movie catalogue', () => {
- it('contains 37 films', () => expect(movies).toHaveLength(37));
+ it('contains 40 films', () => expect(movies).toHaveLength(40));
  it('includes all four Avengers films', () => expect(filterMovies('avengers', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['avengers', 'avengers-ultron', 'avengers-infinity-war', 'avengers-endgame']));
  it('includes both Top Gun films', () => expect(filterMovies('top gun', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['top-gun', 'top-gun-maverick']));
  it('searches Polish and original titles without case sensitivity', () => expect(filterMovies('INCEPTION', 'Wszystkie', 'all', []).map(m => m.id)).toEqual(['inception']));
