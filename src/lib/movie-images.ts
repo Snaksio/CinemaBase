@@ -75,6 +75,6 @@ export const movieImages: Record<string, string> = {
   "the-batman": "https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg",
   "days-of-thunder": "https://image.tmdb.org/t/p/w780/8UvcoeMJag8UWGF8sg7eYspzq0Q.jpg",
  "spider-man-far-from-home": "https://image.tmdb.org/t/p/w780/4q2NNj4S5dG2RLF9CpXsej7yXl.jpg",
- "shrek-2": "https://image.tmdb.org/t/p/original/vi9KpZLupFmLZZWBlS6ed4G1nR5.jpg" ,
- "vaiana": "https://image.tmdb.org/t/p/original/4JeejGugONWpJkbnvL12hVoYEDa.jpg",
+ "shrek-2": "https://image.tmdb.org/t/p/w780/vi9KpZLupFmLZZWBlS6ed4G1nR5.jpg" ,
+ "vaiana": "https://image.tmdb.org/t/p/w780/4JeejGugONWpJkbnvL12hVoYEDa.jpg",
 };
