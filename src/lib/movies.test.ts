@@ -25,3 +25,5 @@ describe('Movie catalogue', () => {
  });
 });import { trailerId } from './movies';
 it('has a trailer for Inception', () => expect(trailerId('inception')).toBe('YoHD9XEInc0'));
+it('shows series only in the series catalogue', () => expect(filterMovies('', 'Wszystkie', 'all', [], 'series').map(m => m.id)).toEqual(['breaking-bad', 'stranger-things', 'game-of-thrones', 'the-last-of-us', 'the-witcher']));
+it('keeps saved series in lists', () => expect(filterMovies('', 'Wszystkie', 'favorite', [{ movie_id: 'breaking-bad', list_type: 'favorite' }], 'any').map(m => m.id)).toEqual(['breaking-bad']));
