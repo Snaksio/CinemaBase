@@ -61,7 +61,10 @@ function Index() {
   },
  });
  const myScore = (id: string) => ratings.find(r => r.movie_id === id)?.score;
- const filtered = filterMovies(search, genre, view, [...lists, ...ratings.map(r => ({ movie_id: r.movie_id, list_type: 'rated' }))]);
+ const [kind, setKind] = useState<'movie' | 'series'>('movie');
+ const [season, setSeason] = useState(1);
+ const filtered = filterMovies(search, genre, view, [...lists, ...ratings.map(r => ({ movie_id: r.movie_id, list_type: 'rated' }))], view === 'all' ? kind : 'any');
+ const currentSeason = selected?.seasons?.find(s => s.number === season) ?? selected?.seasons?.[0];
  async function rate(id: string, score: number) {
   if (!user) { setAuthMessage('Zaloguj się, aby oceniać filmy.'); setAuthOpen(true); return; }
   try {
@@ -142,8 +145,9 @@ function Index() {
      </button>)}</div>
     </section>}
     <section className="catalogue" aria-label="Katalog filmów">
-    <div className="catalogue-heading"><div><h2>{search ? 'Wyniki wyszukiwania' : view === 'favorite' ? 'Twoje ulubione filmy' : view === 'watchlist' ? 'Chcę obejrzeć' : view === 'rated' ? 'Ocenione filmy' : 'Odkryj swój następny film'}</h2><p className="movie-count">{filtered.length} {filtered.length === 1 ? 'film' : filtered.length > 1 && filtered.length < 5 ? 'filmy' : 'filmów'}</p></div></div>
-    <div className="genre-list" aria-label="Gatunki filmowe">{genres.map(tag => <Button key={tag} variant={genre === tag ? 'selected' : 'cinema'} onClick={() => setGenre(tag)} aria-pressed={genre === tag}>{tag}</Button>)}</div>
+     <div className="catalogue-heading"><div><h2>{search ? 'Wyniki wyszukiwania' : view === 'favorite' ? 'Twoje ulubione' : view === 'watchlist' ? 'Chcę obejrzeć' : view === 'rated' ? 'Ocenione' : kind === 'series' ? 'Odkryj swój następny serial' : 'Odkryj swój następny film'}</h2><p className="movie-count">{filtered.length} {view === 'all' && kind === 'series' ? (filtered.length === 1 ? 'serial' : filtered.length > 1 && filtered.length < 5 ? 'seriale' : 'seriali') : filtered.length === 1 ? 'tytuł' : filtered.length > 1 && filtered.length < 5 ? 'tytuły' : 'tytułów'}</p></div>
+      {view === 'all' && <div className="genre-list" aria-label="Rodzaj"><Button variant={kind === 'movie' ? 'selected' : 'cinema'} aria-pressed={kind === 'movie'} onClick={() => { setKind('movie'); setGenre('Wszystkie'); }}>Filmy</Button><Button variant={kind === 'series' ? 'selected' : 'cinema'} aria-pressed={kind === 'series'} onClick={() => { setKind('series'); setGenre('Wszystkie'); }}>Seriale</Button></div>}</div>
+     <div className="genre-list" aria-label="Gatunki filmowe">{genres.map(tag => <Button key={tag} variant={genre === tag ? 'selected' : 'cinema'} onClick={() => setGenre(tag)} aria-pressed={genre === tag}>{tag}</Button>)}</div>
     {listError && <p className="auth-message">Nie udało się wczytać Twoich list. <Button variant="link" onClick={() => queryClient.invalidateQueries({ queryKey: ['film-lists'] })}>Spróbuj ponownie</Button></p>}
     <div className="movie-grid">{filtered.map(movie => <article className="movie-card" key={movie.id}>
      <Button variant="navigation" className="poster-button" aria-label={`Szczegóły: ${movie.title}`} onClick={() => setSelected(movie)}><img src={movie.poster} alt={`Plakat filmu ${movie.title}`} loading="lazy" /></Button>
