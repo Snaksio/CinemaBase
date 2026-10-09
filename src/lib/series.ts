@@ -1,4 +1,4 @@
-export type Season = { number: number; year: number; episodes: number; description: string };
+export type Season = { number: number; year: number; episodes: number; description: string; titles?: string[] };
 export type SeriesInfo = { years: string; seasons: Season[] };
 
 const tmdb = (path: string) => `https://image.tmdb.org/t/p/w780/${path}.jpg`;
