@@ -12,9 +12,9 @@ import { movieImages } from '@/lib/movie-images';
 
 export const Route = createFileRoute('/')({
  head: () => ({ meta: [
-  { title: 'CinemaBase — Odkryj swój następny film' },
-  { name: 'description', content: 'Odkrywaj 37 wyjątkowych filmów. Oglądaj zwiastuny, oceniaj filmy i zapisuj ulubione filmy oraz listę do obejrzenia.' },
-  { property: 'og:title', content: 'CinemaBase — Odkryj swój następny film' },
+  { title: 'Zenvio — Odkryj swój następny film' },
+  { name: 'description', content: 'Odkrywaj filmy i seriale. Oglądaj zwiastuny, oceniaj filmy i zapisuj ulubione filmy oraz listę do obejrzenia.' },
+  { property: 'og:title', content: 'Zenvio — Odkryj swój następny film' },
   { property: 'og:description', content: 'Twoje ulubione historie w jednym miejscu. Odkrywaj filmy i twórz własne listy.' },
   { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
   { property: 'og:image', content: movieImages['parasite-backdrop'] }, { name: 'twitter:image', content: movieImages['parasite-backdrop'] },
