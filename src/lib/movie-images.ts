@@ -29,7 +29,7 @@ export const movieImages: Record<string, string> = {
   parasite: 'https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg',
   'parasite-backdrop': 'https://image.tmdb.org/t/p/original/hiKmpZMGZsrkA3cdce8a7Dpos1j.jpg',
   'inception-backdrop': 'https://image.tmdb.org/t/p/original/s3TBrRGB1iav7gFOCNx3H31MoES.jpg',
-  'interstellar-backdrop': 'https://image.tmdb.org/t/p/original/rAiYTsq0q27Voiy85bDoXhaC8Aq.jpg',
+  'interstellar-backdrop': 'https://image.tmdb.org/t/p/original/pbrkL804c8yAv3zBZR4QPEafpAR.jpg',
   'interstellar': 'https://image.tmdb.org/t/p/original/nrSaXF39nDfAAeLKksRCyvSzI2a.jpg',
   'top-gun': 'https://image.tmdb.org/t/p/w780/fmXOY1bdRJ9CmzroeaTXRyr6qyz.jpg',
   'top-gun-maverick': 'https://image.tmdb.org/t/p/w780/62HCnUTziyWcpDaBO2i1DX17ljH.jpg',
