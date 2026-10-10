@@ -139,3 +139,4 @@
 .episode-list { list-style: none; margin: .75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .35rem; max-height: 220px; overflow-y: auto; }
 .episode-list li { display: flex; align-items: center; gap: .6rem; font-size: .85rem; color: var(--foreground); background: var(--secondary); border-radius: .5rem; padding: .4rem .6rem; }
 .episode-num { min-width: 1.6rem; height: 1.6rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; background: var(--primary); color: var(--primary-foreground); font-size: .75rem; font-weight: 800; }
+.header-nav .lang-switch { border: 1px solid var(--primary); color: var(--foreground); font-weight: 700; min-width: 40px; }
