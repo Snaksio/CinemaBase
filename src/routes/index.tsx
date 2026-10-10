@@ -126,6 +126,7 @@ function Index() {
     <Button variant="navigation" className={view === 'watchlist' ? 'active' : ''} onClick={() => changeView('watchlist')} aria-label="Chcę obejrzeć"><Bookmark /><span className="nav-label">{L('Chcę obejrzeć', 'Watchlist')}</span>{lists.filter(e => e.list_type === 'watchlist').length > 0 && <span className="nav-count">{lists.filter(e => e.list_type === 'watchlist').length}</span>}</Button>
     <Button variant="navigation" className={view === 'favorite' ? 'active' : ''} onClick={() => changeView('favorite')} aria-label="Ulubione"><Heart /><span className="nav-label">{L('Ulubione', 'Favourites')}</span>{lists.filter(e => e.list_type === 'favorite').length > 0 && <span className="nav-count">{lists.filter(e => e.list_type === 'favorite').length}</span>}</Button>
     <Button variant="navigation" className={view === 'rated' ? 'active' : ''} onClick={() => changeView('rated')} aria-label="Ocenione"><StarHalf /><span className="nav-label">{L('Ocenione', 'Rated')}</span>{ratings.length > 0 && <span className="nav-count">{ratings.length}</span>}</Button>
+    <Button variant="navigation" className="lang-switch" aria-label={L('Switch to English', 'Przełącz na polski')} onClick={switchLang}>{lang === 'pl' ? 'EN' : 'PL'}</Button>
     {user && <Button variant="navigation" size="icon" title="Wyloguj się" aria-label="Wyloguj się" onClick={async () => { await supabase.auth.signOut(); queryClient.removeQueries({ queryKey: ['film-lists'] }); queryClient.removeQueries({ queryKey: ['film-ratings'] }); }}><LogOut /></Button>}
    </nav>
   </header>
