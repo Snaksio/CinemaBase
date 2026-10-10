@@ -17,8 +17,8 @@
 }
 :root {
  --background: oklch(0.145 0.004 260); --foreground: oklch(0.97 0.002 260);
- --card: oklch(0.19 0.006 260); --primary: oklch(0.84 0.165 86);
- --primary-foreground: oklch(0.18 0.016 80); --secondary: oklch(0.205 0.005 260);
+ --card: oklch(0.19 0.006 260); --primary: #6D28D9;
+ --primary-foreground: #F5F3FF; --secondary: oklch(0.205 0.005 260);
  --muted-foreground: oklch(0.59 0.012 260); --accent: oklch(0.27 0.008 260);
  --border: oklch(0.27 0.006 260); --destructive: oklch(0.66 0.21 27);
  --hero-shade: linear-gradient(90deg, oklch(0.10 0.004 260 / 88%) 0%, oklch(0.10 0.004 260 / 45%) 46%, oklch(0.10 0.004 260 / 8%) 100%);
