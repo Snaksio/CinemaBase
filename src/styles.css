@@ -17,8 +17,10 @@
 }
 :root {
  --background: oklch(0.145 0.004 260); --foreground: oklch(0.97 0.002 260);
- --card: oklch(0.19 0.006 260); --primary: oklch(0.84 0.165 86);
- --primary-foreground: oklch(0.18 0.016 80); --secondary: oklch(0.205 0.005 260);
+ --card: oklch(0.19 0.006 260); --primary: #6D28D9;
+ --primary-foreground: #F5F3FF; --secondary: oklch(0.205 0.005 260);
+ --star: oklch(0.84 0.165 86); --star-foreground: oklch(0.18 0.016 80);
+
  --muted-foreground: oklch(0.59 0.012 260); --accent: oklch(0.27 0.008 260);
  --border: oklch(0.27 0.006 260); --destructive: oklch(0.66 0.21 27);
  --hero-shade: linear-gradient(90deg, oklch(0.10 0.004 260 / 88%) 0%, oklch(0.10 0.004 260 / 45%) 46%, oklch(0.10 0.004 260 / 8%) 100%);
@@ -60,10 +62,10 @@
 .featured h1 { font-size: 46px; line-height: 1.15; margin: 0 0 15px; font-weight: 800; }
 .film-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--muted-foreground); }
 .film-meta span { display: flex; align-items: center; gap: 5px; }
-.rating { color: var(--primary); }
+.rating { color: var(--star); }
 .rating svg { fill: currentColor; }
 .featured-description { font-size: 13px; line-height: 1.55; margin: 17px 0; color: color-mix(in oklch, var(--foreground) 78%, transparent); max-width: 410px; }
-.film-quote { font-size: 11px; color: var(--primary); margin-top: 20px; }
+.film-quote { font-size: 11px; color: var(--star); margin-top: 20px; }
 .featured-arrow { position: absolute; top: 48%; border-radius: 50%; width: 32px; height: 32px; }
 .featured-arrow.previous { left: 14px; }.featured-arrow.next { right: 14px; }
 .carousel-dots { position: absolute; bottom: 26px; left: 50%; display: flex; gap: 7px; transform: translateX(-50%); }
@@ -94,7 +96,7 @@
 .poster-button img { height: 100%; width: 100%; object-fit: cover; }
 .movie-card::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--poster-shade); }
 .poster-rating { position: absolute; top: 9px; left: 8px; display: flex; align-items: center; gap: 4px; z-index: 2; padding: 4px 6px; border-radius: 5px; font-size: 10px; font-weight: 800; background: color-mix(in oklch, var(--background) 80%, transparent); }
-.poster-rating svg { color: var(--primary); fill: currentColor; width: 11px; height: 11px; }
+.poster-rating svg { color: var(--star); fill: currentColor; width: 11px; height: 11px; }
 .poster-actions { position: absolute; top: 8px; right: 7px; display: flex; flex-direction: column; gap: 5px; z-index: 3; }
 .poster-actions button { width: 28px; height: 28px; border-radius: 6px; }
 .poster-actions svg { width: 14px; height: 14px; }
@@ -126,8 +128,8 @@
 .rate-box { margin-top: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted-foreground); }
 .rate-stars { display: flex; gap: 2px; }
 .rate-stars button { background: none; border: 0; padding: 2px; cursor: pointer; color: var(--muted-foreground); transition: transform .15s, color .15s; }
-.rate-stars button:hover { transform: scale(1.15); color: var(--primary); }
-.rate-stars button.on { color: var(--primary); }
+.rate-stars button:hover { transform: scale(1.15); color: var(--star); }
+.rate-stars button.on { color: var(--star); }
 .rate-stars button.on svg { fill: currentColor; }
 
 .trailer-box { margin-top: 1rem; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; border-radius: 0.75rem; border: 1px solid var(--border); background: var(--muted); }
@@ -139,3 +141,6 @@
 .episode-list { list-style: none; margin: .75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .35rem; max-height: 220px; overflow-y: auto; }
 .episode-list li { display: flex; align-items: center; gap: .6rem; font-size: .85rem; color: var(--foreground); background: var(--secondary); border-radius: .5rem; padding: .4rem .6rem; }
 .episode-num { min-width: 1.6rem; height: 1.6rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; background: var(--primary); color: var(--primary-foreground); font-size: .75rem; font-weight: 800; }
+.header-nav .lang-switch { border: 1px solid var(--primary); color: var(--foreground); font-weight: 700; min-width: 40px; }
+.kind-toggle button[aria-pressed="true"] { color: var(--star); border-color: color-mix(in oklch, var(--star) 45%, transparent); background: color-mix(in oklch, var(--star) 12%, transparent); }
+.kind-toggle button[aria-pressed="true"]:hover { background: color-mix(in oklch, var(--star) 20%, transparent); }
