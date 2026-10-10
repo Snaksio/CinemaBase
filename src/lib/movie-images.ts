@@ -1,10 +1,10 @@
-const posterFallback = (title: string) =>
+export const posterFallback = (title: string) =>
   `https://placehold.co/780x1170/111827/ffffff?text=${encodeURIComponent(title)}`;
 
-const backdropFallback = (title: string) =>
+export const backdropFallback = (title: string) =>
   `https://placehold.co/1600x900/111827/ffffff?text=${encodeURIComponent(title)}`;
 
-const normalizeImageUrl = (value: string | undefined, fallback: string) => {
+export const normalizeImageUrl = (value: string | undefined, fallback: string) => {
   if (!value || value.startsWith('/__l5e/')) return fallback;
   return value;
 };
@@ -20,15 +20,17 @@ export const movieImages: Record<string, string> = {
   nemo: 'https://image.tmdb.org/t/p/original/7DvDbBOwEF6wFCeXlbM9cnx2d1g.jpg',
   'pulp-fiction':'https://image.tmdb.org/t/p/w780/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg',
   'fight-club': 'https://image.tmdb.org/t/p/w780/jSziioSwPVrOy9Yow3XhWIBDjq1.jpg',
-  'shawshank-redemtion': 'https://image.tmdb.org/t/p/w780/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg',
+  shawshank: 'https://image.tmdb.org/t/p/w780/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg',
+  'shawshank-redemption': 'https://image.tmdb.org/t/p/w780/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg',
   'forrest-gump': 'https://image.tmdb.org/t/p/w780/jfoTBFYD8OEI1a0pdLpuJ90cGTt.jpg',
   'lotr': 'https://image.tmdb.org/t/p/w780/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg',
   gladiator: 'https://image.tmdb.org/t/p/w780/aDb548BOkFfI4nFm0kx8A3Ezh7H.jpg',
   'spirited-away': 'https://image.tmdb.org/t/p/w780/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg',
   parasite: 'https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg',
-  'parasite-backdrop': 'https://image.tmdb.org/t/p/w780/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg',
-  'inception-backdrop': 'https://image.tmdb.org/t/p/w780/ii8QGacT3MXESqBckQlyrATY0lT.jpg',
-  'interstellar-backdrop': 'https://image.tmdb.org/t/p/w780/xJHokMbljvjADYdit5fK5VQsXEG.jpg',
+  'parasite-backdrop': 'https://image.tmdb.org/t/p/original/hiKmpZMGZsrkA3cdce8a7Dpos1j.jpg',
+  'inception-backdrop': 'https://image.tmdb.org/t/p/original/s3TBrRGB1iav7gFOCNx3H31MoES.jpg',
+  'interstellar-backdrop': 'https://image.tmdb.org/t/p/original/rAiYTsq0q27Voiy85bDoXhaC8Aq.jpg',
+  'interstellar': 'https://image.tmdb.org/t/p/original/nrSaXF39nDfAAeLKksRCyvSzI2a.jpg',
   'top-gun': 'https://image.tmdb.org/t/p/w780/fmXOY1bdRJ9CmzroeaTXRyr6qyz.jpg',
   'top-gun-maverick': 'https://image.tmdb.org/t/p/w780/62HCnUTziyWcpDaBO2i1DX17ljH.jpg',
   dune: 'https://image.tmdb.org/t/p/w780/d5NXSklXo0qyIYkgV94XAgMIckC.jpg',
@@ -37,7 +39,8 @@ export const movieImages: Record<string, string> = {
   'django-unchained': 'https://image.tmdb.org/t/p/w780/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg',
   whiplash: 'https://image.tmdb.org/t/p/w780/7fn624j5lj3xTme2SgiLCeuedmO.jpg',
   'la-la-land': 'https://image.tmdb.org/t/p/w780/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg',
-  godfather: 'https://image.tmdb.org/t/p/w780/3bhkrj58Vtu7enYsRolD1fZdja1.jpg', 'jurassic-park': 'https://image.tmdb.org/t/p/w780/maFjKnJ62hDQ9E66dKqDZgbUy0H.jpg',
+  godfather: 'https://image.tmdb.org/t/p/w780/3bhkrj58Vtu7enYsRolD1fZdja1.jpg', 
+  'jurassic-park': 'https://image.tmdb.org/t/p/w780/maFjKnJ62hDQ9E66dKqDZgbUy0H.jpg',
   'back-to-the-future': 'https://image.tmdb.org/t/p/w780/fNOH9f1aA7XRTzl1sAOx9iF553Q.jpg',
   'avengers-ultron': 'https://image.tmdb.org/t/p/w780/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg',
   'avengers-infinity-war': 'https://image.tmdb.org/t/p/w780/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg',

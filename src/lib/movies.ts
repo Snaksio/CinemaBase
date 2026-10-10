@@ -1,4 +1,4 @@
-import { movieImages } from './movie-images';
+import { backdropFallback, movieImages, normalizeImageUrl, posterFallback } from './movie-images';
 import { seriesEntries, type Season } from './series';
 
 export type Movie = { id: string; title: string; original: string; year: number; rating: number; genres: string[]; director: string; duration: string; description: string; quote?: string; poster: string; backdrop?: string; kind?: 'series'; years?: string; seasons?: Season[] };
@@ -45,10 +45,9 @@ const entries: Omit<Movie, 'poster' | 'backdrop'>[] = [
 {id:'vaiana', title: 'Vaina: Skarb oceanu', original: 'Moana', year: 2016, rating: 7.6, genres:['Animacja', 'Przygodowy'], director:  'Ron Clements, John Musker', duration: ' 1 godz. 47 min', description: 'Nastoletnia córka przywódcy plemienia, chcąc ocalić swoją wyspę przed zagładą, wyrusza na niebezpieczną wyprawę po oceanie'},
 ];
 export const movies: Movie[] = entries.map(movie => {
- const poster = movieImages[movie.id];
- if (!poster) throw new Error(`Missing poster: ${movie.id}`);
- const backdrop = movieImages[`${movie.id}-backdrop`];
- return { ...movie, poster, ...(backdrop ? { backdrop } : {}) };
+ const poster = normalizeImageUrl(movieImages[movie.id], posterFallback(movie.title));
+ const backdrop = normalizeImageUrl(movieImages[`${movie.id}-backdrop`], backdropFallback(movie.title));
+ return { ...movie, poster, backdrop };
 });
 const trailers: Record<string, string> = { inception: 'YoHD9XEInc0', interstellar: 'zSWdZVtXT7E', 'dark-knight': 'EXeTwQWrcwY', 'dark-knight-rises': 'g8evyE9TuYk', matrix: 'vKQi3bBA1y8', parasite: '5xH0HfJHsaY', dune: '8g18jFHCLXk', oppenheimer: 'uYPbbksJxIg', 'top-gun': 'xa_z57UatDY', 'top-gun-maverick': 'giXco2jaZ_4', joker: 'zAGVQLHvwOY', avengers: 'eOrNdBpGMv8', 'avengers-ultron': 'tmeOjFno6Do', 'avengers-infinity-war': '6ZfuNTqbHE8', 'avengers-endgame': 'TcMBFSGVi1c', avatar: '5PSNL1qE6VY', nemo: '9oQ628Seb9w', 'pulp-fiction': 's7EdQ4FqbhY', 'fight-club': 'qtRKdVHc-cE', shawshank: '6hB3S9bIaco', 'forrest-gump': 'bLvqoHBptjg', lotr: 'V75dMMIW2B4', gladiator: 'owK1qxDselE', 'spirited-away': 'ByXuk9QqQkk', titanic: 'kVrqfYjkTdQ', 'django-unchained': '0fUCuvNlOCg', whiplash: '7d_jQycdQGo', 'la-la-land': '0pdqf4P9MB8', godfather: 'UaVTIH8mujA', 'jurassic-park': 'lc0UehYemQA', 'back-to-the-future': 'qvsgGtivCgs', 'spiderman-brand-new-day': '8TZMtslA3UY', shrek: 'CwXOrWvPBPk', 'harry-potter': 'VyHV0BRtdxo', 'dune-part-two': 'Way9Dexny3w', 'spider-man-no-way-home': 'JfVOs4VSpmA', 'the-batman': 'mqqft2x_Aa4', 'days-of-thunder': 'oPXL4_eZ4-M', 'spider-man-far-from-home': 'Nt9L1jCKGnE', 'shrek-2': 'oW-vf54cUes', 'vaiana': 'LKFuXETZUsI', };
 export const trailerId = (id: string): string | undefined => trailers[id];
